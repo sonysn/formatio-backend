@@ -1,40 +1,31 @@
+const Tutor = require('../models/Tutor');
+
 const getTutors = (req, res) => {
-    res.json(
-        [
-            {
-                "NAME": "John Doe",
-                "PHONE NO": "8055569786",
-                "CITY": "New York"
-            },
-            {
-                "NAME": "Lassa Dsayle",
-                "PHONE NO": "8055569786",
-                "CITY": "Lagos"
-            },
-            {
-                "NAME": "Loarry Page",
-                "PHONE NO": "8055569786",
-                "CITY": "London"
-            },
-            {
-                "NAME": "John Henry",
-                "PHONE NO": "8055569786",
-                "CITY": "Paris"
-            },
-            {
-                "NAME": "Kalvin Le",
-                "PHONE NO": "8055569786",
-                "CITY": "Madrid"
-            },
-            {
-                "NAME": "Maxwell Lea",
-                "PHONE NO": "8055569786",
-                "CITY": "Rome"
-            }
-        ]
-    )
+    //read from mongoDB database with mongoose
+    const tutors = Tutor.find()
+    .then((foundtutors) => {
+        res.json({ tutors: foundtutors })
+    })
+    .catch(err => console.log(err));
+}
+
+const createTutors = (req, res) => {
+    const tutor = new Tutor(req.body);
+    // console.log("CREATING TUTOR: ", req.body);
+    //saves to mongoDB database with mongoose
+    tutor.save((err, result) => {
+        if(err) {
+            return res.status(400).json({
+                error: err
+            });
+        }
+        res.json({
+            tutor: result
+        });
+    });
 }
 
 module.exports = {
-    getTutors
+    getTutors,
+    createTutors
 };

@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const moongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 dotenv.config()
 
@@ -17,7 +18,9 @@ moongoose.connection.on('error', err => {
 const tutorRoutes = require('./routes/Tutor.js')
 
 // middleware
+app.use(bodyParser.json());
 app.use("/", tutorRoutes);
+
 
 //This (PORT) is commnt from .env
 const port = process.env.PORT || 5000
