@@ -14,7 +14,11 @@ const tutorialAdminSchema = new mongoose.Schema({
     tutorialAdminContactAddress: {
         type: String,
         trim: true
-    }
+    },
+    tutorialAdminPassword: {
+        type: String,
+        required: true,
+    },
 })
 
 module.exports = mongoose.model("Tutorial Admin", tutorialAdminSchema)
